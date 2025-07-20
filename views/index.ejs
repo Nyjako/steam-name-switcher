@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Nicknames</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <h1>Nicknames</h1>
+  <h2>Logged as "<b><%= logged_as %></b>" current nickname "<b><%= current_nickname %></b>"</h2>
+
+  <div class="nickname-grid">
+    <% nicknames.forEach(n => { %>
+      <div class="nickname-card" id="<%= n.id %>">
+        <% if (editingId === n.id) { %>
+          <form method="POST" action="/edit/<%= n.id %>">
+            <input name="name" value="<%= n.name %>" required />
+            <select name="categories" multiple>
+              <% categories.forEach(c => { %>
+                <option value="<%= c %>" <%= n.categories.includes(c) ? 'selected' : '' %>><%= c %></option>
+              <% }) %>
+            </select>
+            <button>Save</button>
+          </form>
+        <% } else { %>
+          <div class="nickname-title"><%= n.name %></div>
+          <div>[<%= n.categories.join(', ') %>]</div>
+          <div class="nickname-buttons">
+            <form method="POST" action="/set/<%= n.id %>"><button>Use</button></form>
+            <form method="POST" action="/delete/<%= n.id %>"><button>Delete</button></form>
+            <a href="/?edit=<%= n.id %>#<%= n.id %>"><button type="button">Edit</button></a>
+            <!--<form method="GET" action="/?edit=<%= n.id %>"><button>Edit</button></form>-->
+          </div>
+        <% } %>
+      </div>
+    <% }) %>
+  </div>
+
+  <div class="form-group" id="adding">
+    <div class="form">
+      <h2>Add Nickname</h2>
+      <form action="/add" method="POST">
+        <input name="name" placeholder="Nickname" required />
+        <select name="categories" multiple>
+          <% categories.forEach(c => { %>
+            <option value="<%= c %>"><%= c %></option>
+          <% }) %>
+        </select>
+        <button>Add</button>
+      </form>
+    </div>
+    
+    <div class="form">
+      <h2>Add Category</h2>
+      <form action="/add-category" method="POST">
+        <input name="name" placeholder="Category name" required />
+        <button>Add</button>
+      </form>
+    </div>
+  </div>
+</body>
+<script>
+  window.addEventListener('DOMContentLoaded', () => {
+    const hash = location.hash.replace('#', '');
+    if (hash) {
+      const card = document.getElementById(hash);
+      if (card) {
+        card.classList.add('selected');
+        card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+    }
+  });
+</script>
+</html>

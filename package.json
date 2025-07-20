@@ -1,0 +1,23 @@
+{
+  "name": "steam-name-switcher",
+  "version": "1.0.0",
+  "description": "",
+  "license": "MIT",
+  "author": "Kacper \"Nyjako\" Tucholski",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "body-parser": "^2.2.0",
+    "dotenv": "^17.2.0",
+    "ejs": "^3.1.10",
+    "express": "^5.1.0",
+    "prompt-sync": "^4.2.0",
+    "qrcode": "^1.5.4",
+    "sqlite3": "^5.1.7",
+    "steam-session": "^1.9.4",
+    "steam-user": "^5.2.3"
+  }
+}

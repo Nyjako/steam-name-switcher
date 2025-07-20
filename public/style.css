@@ -1,0 +1,99 @@
+body {
+  background-color: #121212;
+  color: #e0e0e0;
+  font-family: sans-serif;
+  width: 99vw;
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+}
+
+h1 {
+  text-align: center;
+  font-weight: bolder;
+  font-size: xx-large;
+}
+
+h2 {
+  text-align: center;
+  font-size: larger;
+}
+
+input,
+select,
+button {
+  background-color: #1e1e1e;
+  color: #e0e0e0;
+  border: 1px solid #333;
+  padding: 10px;
+  margin: 5px;
+  border-radius: 5px;
+}
+
+button {
+  cursor: pointer;
+}
+
+form {
+/*   display: inline-block; */
+  margin: 5px 0;
+  
+  display: flex;
+  flex-direction: column;
+}
+
+.nickname-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 16px;
+  margin-bottom: 2em;
+  padding: 0 50px;
+}
+
+.nickname-card {
+  background-color: #1e1e1e;
+  padding: 16px;
+  border-radius: 8px;
+  border: 1px solid #333;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  text-align: center;
+}
+
+.nickname-title {
+  font-size: 1.2em;
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+
+.nickname-buttons form {
+  display: inline-block;
+  margin: 4px 0;
+}
+
+.login {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.login > h2 {
+  font-size: xxx-large;
+}
+
+.form-group {
+  display: flex;
+  margin: 0 50px;
+  gap: 50px;
+}
+
+.form-group > .form {
+  flex-grow: 1;
+}
+
+.nickname-card.selected {
+  border: 2px solid #ff9800;
+  box-shadow: 0 0 10px #ff9800;
+}

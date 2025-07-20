@@ -1,0 +1,53 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Login</title>
+</head>
+  <style>
+    body {
+      background-color: #121212;
+      color: #e0e0e0;
+      font-family: sans-serif;
+      width: 99vw;
+      height: 100vh;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+    }
+
+    .center {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+    }
+
+    input,
+    select,
+    button {
+      background-color: #1e1e1e;
+      color: #e0e0e0;
+      border: 1px solid #333;
+      padding: 10px;
+      margin: 5px;
+      border-radius: 5px;
+    }
+  </style>
+<body class="center">
+  <h2>Steam Login</h2>
+  <form action="/login" method="POST" class="center">
+    <input name="user" placeholder="Username" required /><br>
+    <input name="pass" type="password" placeholder="Password" required /><br>
+    <input name="twoFactor" placeholder="Steam Guard code (optional)" /><br>
+    <button>Login</button>
+  </form>
+  <form method="POST" action="/login-qr">
+    <button>Login with QR code</button>
+  </form>
+</body>
+</html>
+    

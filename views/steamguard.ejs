@@ -1,0 +1,16 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Steam Guard</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body class="dark">
+  <h2>Enter Steam Guard Code <%= domain ? `for ${domain}` : '' %></h2>
+  <form action="/login-sg" method="POST">
+    <input name="code" placeholder="Guard code" required autofocus /><br>
+    <button>Submit</button>
+  </form>
+</body>
+</html>
+    
