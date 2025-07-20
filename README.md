@@ -22,7 +22,7 @@ A simple Node.js web app to quickly switch between pre-defined Steam usernames u
 
 ### Prerequisites
 
-- Node.js installed (v16+ recommended)
+- Node.js installed
 - A Steam account
 
 ### Installation
@@ -68,3 +68,13 @@ Once logged in, you'll see a simple interface where you can:
     - Select a username to switch to
     - Add new usernames
     - Assign categories to usernames for better organization
+
+## Notes
+
+- This tool is intended for local use only.
+- Your Steam credentials are not stored anywhere
+- Only one Steam session is active at a time — restarting app will invalidate previous sessions.
+
+## Disclaimer
+
+This tool is unofficial and not affiliated with Valve or Steam in any way. Use at your own risk. Always be cautious with apps that interact with your Steam account.
