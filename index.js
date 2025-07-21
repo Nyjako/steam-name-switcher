@@ -14,13 +14,17 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static('public'));
 
 const DB_FILE = 'data.json';
+const PORT = 3000;
 
-let client;
+let client = new SteamUser();
+client.setOption('renewRefreshTokens', true);
+
 let loggedIn = false;
 let qrSession;
 
 let nicknames = [];
 let categories = [];
+let refreshToken = null;
 let nextId = 1;
 let current_nickname = "";
 let logged_as = "";
@@ -32,21 +36,63 @@ function loadData() {
     nicknames = data.nicknames || [];
     categories = data.categories || [];
     nextId = data.nextId || 1;
+    refreshToken = data.refreshToken || null;
   }
 }
 
 // Save nicknames and categories to file
 function saveData() {
-  fs.writeFileSync(DB_FILE, JSON.stringify({ nicknames, categories, nextId }, null, 2));
+  fs.writeFileSync(DB_FILE, JSON.stringify({ nicknames, categories, nextId, refreshToken }, null, 2));
 }
 
 loadData();
+
+client.on('refreshToken', token => {
+  refreshToken = token;
+  saveData();
+  console.log('✅ New refreshToken saved');
+});
+
+// Attempt silent login on startup
+(async () => {
+  if (refreshToken) {
+    console.log('🔁 Trying refreshToken login...');
+    try {
+      client.logOn({ refreshToken: refreshToken });
+      client.once('loggedOn', () => {
+        loggedIn = true;
+        console.log(`✅ Logged in via refreshToken`);
+      });
+      client.once('error', e => {
+        console.warn('❌ refreshToken login failed:', e.message);
+        refreshToken = null;
+        saveData();
+        waitForManualLogin();
+      });
+    } catch {
+      refreshToken = null;
+      saveData();
+      waitForManualLogin();
+    }
+  } else waitForManualLogin();
+})();
+
+// If refresh fails, prompt manual login
+function waitForManualLogin() {
+  console.log(`🚪 Please visit http://localhost:${PORT} to authenticate manually.`);
+}
+
+// SteamClient logOff handling
+client.on('loggedOff', reason => {
+  console.warn('⚠️ Logged off:', reason);
+  refreshToken = null;
+  saveData();
+});
 
 app.get('/login', (req, res) => res.render('login'));
 
 app.post('/login', (req, res) => {
   const { user, pass, twoFactor } = req.body;
-  client = new SteamUser();
   client.logOn({
     accountName: user,
     password: pass,
@@ -177,5 +223,5 @@ app.post('/set/:id', (req, res) => {
   `);
 });
 
-app.listen(3000, () => console.log('🌐 App running at http://localhost:3000'));
+app.listen(PORT, () => console.log('🌐 App running at http://localhost:3000'));
     
